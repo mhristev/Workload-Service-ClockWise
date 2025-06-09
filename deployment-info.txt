@@ -1,0 +1,22 @@
+ClockWise Platform Deployment Info
+==================================
+Deployment Time: Mon Jun  9 13:21:02 CEST 2025
+Minikube IP: 127.0.0.1
+Custom Domain: clockwise.local
+Namespace: clockwise
+
+Access URLs:
+- Main API: https://clockwise.local
+- Auth Service: https://clockwise.local/auth
+- User Service: https://clockwise.local/api/v1/users
+- Organization Service: https://clockwise.local/api/organization
+- Planning Service: https://clockwise.local/api/v1/planning
+- Workload Service: https://clockwise.local/api/v1/workload
+
+Scaling Configuration:
+- Min Replicas: 1
+- Max Replicas: 3
+- Planning Service CPU Threshold: 40%
+- User Service CPU Threshold: 45%
+- Workload Service CPU Threshold: 45%
+- Organization Service CPU Threshold: 50%

@@ -1,0 +1,19 @@
+* Tunnel successfully started
+
+* NOTE: Please do not close this terminal as this process must stay alive for the tunnel to be accessible ...
+
+! The service/ingress clockwise-auth-ingress requires privileged ports to be exposed: [80 443]
+* sudo permission will be asked for it.
+* Starting tunnel for service clockwise-auth-ingress.
+! The service/ingress clockwise-organization-service-ingress requires privileged ports to be exposed: [80 443]
+* sudo permission will be asked for it.
+! The service/ingress clockwise-planning-service-ingress requires privileged ports to be exposed: [80 443]
+* Starting tunnel for service clockwise-organization-service-ingress.
+* sudo permission will be asked for it.
+* Starting tunnel for service clockwise-planning-service-ingress.
+! The service/ingress clockwise-user-service-ingress requires privileged ports to be exposed: [80 443]
+* sudo permission will be asked for it.
+! The service/ingress clockwise-workload-service-ingress requires privileged ports to be exposed: [80 443]
+* Starting tunnel for service clockwise-user-service-ingress.
+* sudo permission will be asked for it.
+* Starting tunnel for service clockwise-workload-service-ingress.
