@@ -1,6 +1,6 @@
 ClockWise Platform Deployment Info
 ==================================
-Deployment Time: Mon Jun  9 13:21:02 CEST 2025
+Deployment Time: Tue Jun 17 12:19:26 CEST 2025
 Minikube IP: 127.0.0.1
 Custom Domain: clockwise.local
 Namespace: clockwise
@@ -16,6 +16,8 @@ Access URLs:
 Scaling Configuration:
 - Min Replicas: 1
 - Max Replicas: 3
+- Auth Service CPU Threshold: 50%
+- Keycloak CPU Threshold: 60%
 - Planning Service CPU Threshold: 40%
 - User Service CPU Threshold: 45%
 - Workload Service CPU Threshold: 45%

@@ -3,6 +3,8 @@ package com.clockwise.workloadservice.config
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder
@@ -15,6 +17,7 @@ import org.springframework.security.oauth2.jwt.Jwt
 
 @Configuration
 @EnableWebFluxSecurity
+@EnableReactiveMethodSecurity
 class SecurityConfig {
 
     @Value("\${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
@@ -27,13 +30,23 @@ class SecurityConfig {
             .cors { it.and() }
             .authorizeExchange { exchanges ->
                 exchanges
-                    .pathMatchers(
-                        "/actuator/**",
-                        "/health",
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html"
-                    ).permitAll()
+                    .pathMatchers("/actuator/**").permitAll()
+                    .pathMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    .pathMatchers(HttpMethod.OPTIONS).permitAll()
+                    
+                    // Work Session endpoints - Role hierarchy: admin > manager > user
+                    // Users can clock in/out for themselves, managers can for their team, admins for anyone
+                    .pathMatchers(HttpMethod.POST, "/v1/work-sessions/clock-in").hasAnyRole("admin", "manager", "user")
+                    .pathMatchers(HttpMethod.POST, "/v1/work-sessions/clock-out").hasAnyRole("admin", "manager", "user")
+                    
+                    // Work hours viewing - managers and admins can view all users, users can view their own
+                    .pathMatchers(HttpMethod.GET, "/v1/work-sessions/user/**").hasAnyRole("admin", "manager", "user")
+                    
+                    // Session Notes endpoints - All authenticated users can manage notes
+                    .pathMatchers(HttpMethod.POST, "/v1/session-notes").hasAnyRole("admin", "manager", "user")
+                    .pathMatchers(HttpMethod.GET, "/v1/session-notes/**").hasAnyRole("admin", "manager", "user")
+                    
+                    // All other authenticated users can read
                     .anyExchange().authenticated()
             }
             .oauth2ResourceServer { oauth2 ->
